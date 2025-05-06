@@ -17,7 +17,7 @@
             color: white;
             text-align: center;
             padding: 1rem;
-            border: 1px solid black; /* Added explicit black border */
+            border: 1px solid black;
         }
         nav {
             background-color: #f4f4f4;
@@ -44,7 +44,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            border: 1px solid black; /* Added explicit black border */
+            border: 1px solid black;
         }
         /* Form styling */
         form {
@@ -54,7 +54,7 @@
             gap: 0.5rem;
             max-width: 400px;
         }
-        input[type="text"] {
+        input[type="text"], input[type="email"] {
             padding: 0.5rem;
             font-size: 1rem;
             border: 1px solid #ccc;
@@ -71,6 +71,11 @@
         }
         button:hover {
             background-color: #0056b3;
+        }
+        .form-message {
+            margin-top: 0.5rem;
+            color: green;
+            display: none;
         }
         @media (max-width: 600px) {
             nav a {
@@ -95,15 +100,43 @@
         <p>This is a simple website built with HTML and CSS. You can customize this template by adding your own content, styles, and pages.</p>
         <h2 id="forms">Forms</h2>
         <p>Fill out the form below to send us a message.</p>
-        <form action="https://formspree.io/f/your-form-id" method="POST">
-            <input type="text" name="message" placeholder="Enter your message" required>
+        <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="text" name="message" placeholder="Your Message" required>
             <button type="submit">Submit</button>
         </form>
-        <h2>Contact</h2>
-        <p>Email: example@email.com</p>
+        <p class="form-message" id="form-message">Thank you! Your message has been sent.</p>
     </div>
     <footer>
         <p>© 2025 My Website. All rights reserved.</p>
     </footer>
+    <script>
+        // Formspree AJAX submission to prevent page redirect
+        const form = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                if (response.ok) {
+                    formMessage.style.display = 'block';
+                    form.reset();
+                    setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
+                } else {
+                    alert('Error sending message. Please try again.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
+            }
+        });
+    </script>
 </body>
 </html>
