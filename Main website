@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form Website</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center">Contact Me</h1>
+        <!-- Formspree form -->
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contact-form" class="space-y-4">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" required class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" required class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                <textarea id="message" name="message" required rows="4" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition">Send Message</button>
+        </form>
+        <p id="form-message" class="mt-4 text-center text-sm text-gray-600"></p>
+    </div>
+
+    <script>
+        // Basic client-side form submission feedback
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            // Optional: Add client-side validation or feedback if needed
+            setTimeout(() => {
+                document.getElementById('form-message').textContent = 'Message sent successfully!';
+                document.getElementById('form-message').classList.add('text-green-500');
+                document.getElementById('contact-form').reset();
+            }, 500); // Delay to simulate submission
+        });
+    </script>
+</body>
+</html>
