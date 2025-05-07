@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Info Generator</title>
+</head>
+<body>
+  <h2>Enter Your Contact Info</h2>
+  <form id="vcfForm">
+    <input type="text" id="firstName" placeholder="First Name" required><br>
+    <input type="text" id="lastName" placeholder="Last Name" required><br>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="tel" id="phone" placeholder="Phone"><br>
+    <input type="text" id="company" placeholder="Company"><br>
+    <input type="text" id="title" placeholder="Title"><br>
+    <button type="submit">Download vCard</button>
+  </form>
+
+  <script>
+    document.getElementById('vcfForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const vcf = `
+BEGIN:VCARD
+VERSION:3.0
+N:${lastName.value};${firstName.value}
+FN:${firstName.value} ${lastName.value}
+EMAIL:${email.value}
+TEL;TYPE=WORK,VOICE:${phone.value}
+ORG:${company.value}
+TITLE:${title.value}
+END:VCARD
+`.trim();
+
+      const blob = new Blob([vcf], { type: 'text/vcard' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${firstName.value}_${lastName.value}.vcf`;
+      link.click();
+    });
+  </script>
+</body>
+</html>
